@@ -140,13 +140,13 @@ namespace Microsoft.FSharp.Text.StructuredFormat
                     (stopShort : 'z -> bool)
                     (z : 'z)
                     maxLength =
-          let rec consume n z =
-            if stopShort z then [wordL "..."] else
+          let rec consume acc n z =
+            if stopShort z then List.rev (wordL("...") :: acc) else
             match project z with
-              | None       -> []  (* exhaused input *)
-              | Some (x,z) -> if n<=0 then [wordL "..."]               (* hit print_length limit *)
-                                      else itemL x :: consume (n-1) z  (* cons recursive... *)
-          consume maxLength z  
+              | None       -> List.rev acc  (* exhaused input *)
+              | Some (x,z) -> if n<=0 then List.rev (wordL("...") :: acc)   (* hit print_length limit *)
+                                      else consume (itemL(x) :: acc) (n-1) z  (* cons recursive... *)
+          consume [] maxLength z  
 
         let unfoldL itemL project z maxLength = boundedUnfoldL  itemL project (fun _ -> false) z maxLength
           

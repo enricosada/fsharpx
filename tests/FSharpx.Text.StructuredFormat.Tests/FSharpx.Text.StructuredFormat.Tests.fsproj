@@ -52,6 +52,9 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\FSharpx.Tests\FsUnit.fs">
+      <Link>FsUnit.fs</Link>
+    </Compile>
     <Compile Include="StructuredFormatTests.fs" />
   </ItemGroup>
   <ItemGroup>
